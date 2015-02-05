@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <form role="form" novalidate class="css-form" name="myForm">
+  <div class="panel">
+          <div class="alert alert-success sample-show-hide" ng-show="successMessage">
+            <button type="button" class="close" ng-click="successMessage=null">&times;</button>
+            <strong>Success!</strong> {{successMessage}}
+          </div>
+          <p><input type="submit" class="btn btn-primary" ng-click="update(customer)" value="Mettre à jour" ng-disabled="!myForm.$valid" ng-show="actionType=='update'"/>        
+        <input type="submit" class="btn btn-primary" ng-click="save(customer)" value="Enregistrer" ng-disabled="!myForm.$valid" ng-show="actionType=='add'"/></p>
+        <ul class="list-group">
+            <li class="list-group-item">       
+        <div class="form-group" ng-class="{'has-warning': myForm.lastName.$error.required}">
+          <label for="lastName" class="control-label">Nom</label>
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" placeholder="Nom" ng-model="customer.lastName" name="lastName" required/>
+            <div class="input-group-addon bg-warning">Requis</div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-warning': myForm.firstName.$error.required}">
+          <label for="firstName" class="control-label">Prénom</label>
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" placeholder="Prénom" ng-model="customer.firstName" name="firstName" required/>
+            <div class="input-group-addon bg-warning">Requis</div>
+            </div>
+        </div>
+         <div class="form-group" ng-class="{'has-error': myForm.email.$error.email, 'has-warning': myForm.email.$error.required}">     
+          <label for="email" class="control-label">Email</label>
+          <div class="input-group">
+            <div class="input-group-addon">@</div>
+            <input type="email" name="email" class="form-control input-sm" placeholder="Email" ng-model="customer.email" required />
+            <div class="input-group-addon bg-warning">Requis</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone" class="control-label">Téléphone</label>
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" placeholder="Téléphone" ng-model="customer.phone" />
+          </div>
+        </div>       
+        <div class="form-group">
+          <label for="comments" class="control-label">Commentaires</label>
+          <textarea class="form-control" rows="3" ng-model="customer.comments"/>
+        </div>        
+            </li>
+          </ul>   
+  </div>
+    <div class="panel panel-default">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-info"><input class="btn btn-default" type="button" value="≧^◡^≦" ng-click="customer.cats.push({})"></li>
+        <li class="list-group-item" ng-repeat="cat in customer.cats">
+            <ng-form name="catForm" class="form-inline">
+              <div class="form-group" ng-class="{'has-warning': catForm.catName.$error.required}">
+                <label class="sr-only" for="exampleInputEmail3">Nom</label>
+                <input type="text" class="form-control input-sm" placeholder="Nom" ng-model="cat.name" name="catName" required/>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="Naissance">Date de Naissance</label>
+                <!--<input type="date" class="form-control input-sm" ng-model="cat.birthDate" ng-model-options="{ getterSetter: true }"/>-->
+                <input type="date" class="form-control input-sm" ng-model="cat.birthDate" placeholder="yyyy-MM-dd"/>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="Sexe">Sexe</label>
+                <!--<input type="date" class="form-control input-sm" ng-model="cat.birthDate" ng-model-options="{ getterSetter: true }"/>-->
+                <select class="form-control input-sm" ng-model="cat.sexe" ng-options="sexe for sexe in sexes"></select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="Comments">Comments</label>
+                <!--<input type="date" class="form-control input-sm" ng-model="cat.birthDate" ng-model-options="{ getterSetter: true }"/>-->
+                <textarea class="form-control" rows="1" cols="100" ng-model="cat.comments"/>
+              </div>
+              <div class="form-group" >
+              <span class="btn btn-primary">Photo</span>                
+              </div>
+            </ng-form>
+        </li>
+      </ul>
+      </div>
+  </form>  <!-- ng-click="$flow.opts.target='/upload/image/cat/'+cat._id+'/customer/'+customer._id"-->
+    </div> <!-- /container 
