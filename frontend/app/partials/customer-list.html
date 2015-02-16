@@ -16,6 +16,7 @@
           <th>Email</th>
           <th>Téléphone</th>
           <th>Détail</th>
+          <th>Booking</th>
           <th>Remove</th>
         </tr>
       </thead>
@@ -30,9 +31,13 @@
                 <button type="button" class="btn btn-xs btn-primary glyphicon glyphicon-zoom-in"></button>
               </a>
           </td>
-          <td><a>
-                <button type="button" class="btn btn-xs btn-primary glyphicon glyphicon-remove" ng-click="remove(customer._id, $index)"></button>
-              </a>
+          <td>
+              <a class="btn btn-xs btn-warning" href="#/booking/{{customer._id}}" role="button">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a>
+          </td>
+          <td><button type="button" class="btn btn-xs btn-primary" ng-click="remove(customer._id, $index)">
+                <span class=" glyphicon glyphicon-remove"></span>
+              </button>
           </td>
         </tr>
       </tbody>

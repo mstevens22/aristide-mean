@@ -33,7 +33,14 @@ var Cat = new Schema({
     type    : Date,
     default : Date.now
   }
-});
+}, {
+    toObject: {virtuals: true}
+    ,toJSON: {virtuals: true}
+  });
+
+// Cat.virtual('birthDateFull').get(function () {
+//   return new Date(this.birthDate);
+// });
 
 
 var Customer = new Schema({
@@ -62,7 +69,10 @@ var Customer = new Schema({
     default : Date.now
   },
   cats: [Cat]
-});
+}, {
+    toObject: {virtuals: true}
+    ,toJSON: {virtuals: true}
+  });
 
 Customer.path('email').validate(function (v) {
   return ((v != "") && (v != null));

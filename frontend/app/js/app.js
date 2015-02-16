@@ -5,9 +5,11 @@
 var aristideApp = angular.module('aristideApp', [
   'ngRoute',
   'ngAnimate',
+  'ngUpload',
   'aristideControllers',
   'aristideFilters',
-  'aristideServices'
+  'aristideServices',
+  'angularMoment'
 ]);
 
 
@@ -22,7 +24,15 @@ aristideApp.config(['$routeProvider',
         templateUrl: 'partials/customer-detail.html',
         controller: 'CustomerDetailCtrl'
       }).
+      when('/booking/:customerId', {
+        templateUrl: 'partials/customer-booking.html',
+        controller: 'CustomerBookingCtrl'
+      }).
+      when('/', {
+        templateUrl: 'partials/home.html',
+        controller: 'HomeCtrl'
+      }).
       otherwise({
-        redirectTo: '/customer'
+        redirectTo: '/'
       });
   }]);

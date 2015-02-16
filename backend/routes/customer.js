@@ -20,6 +20,7 @@ module.exports = function(app) {
     console.log("GET - /customer");
     return Customer.find(function(err, customers) {
       if(!err) {
+        //console.log(customers[1].cats[0].birthDate instanceof Date);
         return res.send(customers);
       } else {
         res.statusCode = 500;
@@ -58,6 +59,23 @@ module.exports = function(app) {
   };
 
 
+  /**
+   * Find and retrieve customers by its Name
+   * @param {Object} req HTTP request object.
+   * @param {Object} res HTTP response object.
+   */
+  findCustomersByName = function(req, res) {
+    console.log("GET - /customer/search/:name");
+    return Customer.find({ lastName: new RegExp('^'+req.params.name, "i") }, function(err, customers) {
+      if(!err) {        
+        return res.send(customers);
+      } else {
+        res.statusCode = 500;
+        console.log('Internal error(%d): %s',res.statusCode,err.message);
+        return res.send({ error: 'Server error' });
+      }
+    });
+  };
 
 
   /**
@@ -74,7 +92,8 @@ module.exports = function(app) {
       firstName:    req.body.firstName,
       email :    req.body.email,
       phone:    req.body.phone,
-      comments:    req.body.comments
+      comments:    req.body.comments,
+      cats: req.body.cats
     });
 
     customer.save(function(err) {
@@ -109,8 +128,7 @@ module.exports = function(app) {
         return res.send({ error: 'Not found' });
       }
 
-      console.log('req.body'+req.body.cats);
-      console.log('customer'+customer);
+      console.log('req'+req.body.cats);
 
       if (req.body.lastName != null) customer.lastName = req.body.lastName;
       if (req.body.firstName != null) customer.firstName = req.body.firstName;
@@ -170,10 +188,11 @@ module.exports = function(app) {
   }
 
   //Link routes and actions
-  app.get('/customer', findAllCustomers);
-  app.get('/customer/:id', findCustomerById);
-  app.post('/customer', addCustomer);
-  app.put('/customer/:id', updateCustomer);
-  app.delete('/customer/:id', deleteCustomer);
+  app.get('/customer/regular', findAllCustomers);
+  app.get('/customer/regular/:id', findCustomerById);
+  app.post('/customer/regular', addCustomer);
+  app.put('/customer/regular/:id', updateCustomer);
+  app.delete('/customer/regular/:id', deleteCustomer);
+  app.get('/customer/search/:name', findCustomersByName);
 
 }
