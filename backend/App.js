@@ -13,6 +13,7 @@ var mongoose        = require("mongoose");
 var app            	= express();
 var fs              = require('fs');
 
+
 app.use('/static', express.static(__dirname + '/uploads'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -21,30 +22,31 @@ app.use(multer({ dest: './uploads/'}));
 app.use(methodOverride());
 
 
-app.configure('prod', function(){
+
+if (app.get('production')) {
   app.listen(8080);
+  console.log('Liste on port 8080');
   // MongoDB configuration
   mongoose.connect('mongodb://10.240.237.154/aristide', function(err, res) {
     if(err) {
       console.log('error connecting to MongoDB Database. ' + err);
     } else {
-      console.log('Connected to Database');
+      console.log('Connected to Database on port 80');
     }
   });
-});
-app.configure('dev', function(){
+} else {
   app.listen(8090);
+  console.log('Liste on port 8090');
   // MongoDB configuration
   mongoose.connect('mongodb://localhost/aristide', function(err, res) {
     if(err) {
       console.log('error connecting to MongoDB Database. ' + err);
     } else {
-      console.log('Connected to Database');
+      console.log('Connected to Database on port 27070');
     }
   });
-});
 
-console.log('Im listening on port 8080');
+}
 
 //Deal with CORS issues
 app.use(function(req, res, next) {
@@ -56,7 +58,7 @@ app.use(function(req, res, next) {
 
 // First example router
 app.get('/', function(req, res) {
-  res.send("Hello Aristide Backend!");
+  res.send("Hello world!");
 });
 
 app.post('/upload', function (req, res) {
@@ -92,7 +94,7 @@ app.post('/upload', function (req, res) {
 });
 
 //Add the routes
-var routesCustomer = require('/.routes/customer')(app);
+var routesCustomer = require('./routes/customer')(app);
 var routesBooking = require('./routes/booking')(app);
 var routesPassType = require('./routes/passType')(app);
 var routesStayType = require('./routes/stayType')(app);
