@@ -92,7 +92,7 @@ app.post('/upload', function (req, res) {
 });
 
 //Add the routes
-var routesCustomer = require('./routes/customer')(app);
+var routesCustomer = require('/.routes/customer')(app);
 var routesBooking = require('./routes/booking')(app);
 var routesPassType = require('./routes/passType')(app);
 var routesStayType = require('./routes/stayType')(app);
