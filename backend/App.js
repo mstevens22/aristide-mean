@@ -25,9 +25,9 @@ app.use(methodOverride());
 
 if (app.get('env') == 'production') {
   app.listen(8080);
-  console.log('Liste on port 8080');
+  console.log('Listen on port 8080');
   // MongoDB configuration
-  mongoose.connect('mongodb://10.240.237.154/aristide', function(err, res) {
+  mongoose.connect('mongodb://10.240.237.154:80/aristide', function(err, res) {
     if(err) {
       console.log('error connecting to MongoDB Database. ' + err);
     } else {
