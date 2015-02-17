@@ -23,7 +23,7 @@ app.use(methodOverride());
 
 
 
-if (app.get('production')) {
+if (app.get('env') == 'production') {
   app.listen(8080);
   console.log('Liste on port 8080');
   // MongoDB configuration
