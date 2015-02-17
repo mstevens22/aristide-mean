@@ -33,7 +33,8 @@ if (app.get('env') == 'production') {
     } else {
       console.log('Connected to Database on port 80');
     }
-  });
+  });  
+  app.set('iframeDomain', '104.154.53.229');
 } else {
   app.listen(8090);
   console.log('Liste on port 8090');
@@ -44,6 +45,7 @@ if (app.get('env') == 'production') {
     } else {
       console.log('Connected to Database on port 27070');
     }
+    app.set('iframeDomain', 'localhost');
   });
 
 }
@@ -79,7 +81,7 @@ app.post('/upload', function (req, res) {
                         throw err;
                     else                      
                        //res.send({ msg: '<b>"' + illustrationPath + '"</b> uploaded to the server at ' + new Date().toString() });
-                       res.send("<script>document.domain='localhost'</script><status>ok</status><file>"+fileName+"</file><index>"+req.body.index+"</index>");
+                       res.send("<script>document.domain='"+app.get('iframeDomain')+"'</script><status>ok</status><file>"+fileName+"</file><index>"+req.body.index+"</index>");
                     // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
                     fs.unlink(tmp_path, function() {
                         if (err)

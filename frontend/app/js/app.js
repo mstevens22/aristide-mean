@@ -13,8 +13,8 @@ var aristideApp = angular.module('aristideApp', [
 ]);
 
 aristideApp.constant('CONFIG', {
-  //host: 'http://localhost:8090'
-  host: 'http://104.154.69.14:8080'
+  host: 'http://localhost:8090'
+  //host: 'http://104.154.69.14:8080'
 });
 
 

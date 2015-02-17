@@ -33,4 +33,14 @@ var Room = new Schema({
 module.exports = mongoose.model('Room', Room);
 
 
-//db.rooms.insert([{label: "Chambre1",type: "suite", capacity: 4}, {label: "Chambre2",type: "suite", capacity: 4}, {label: "Chambre3",type: "simple", capacity: 2}, {label: "Chambre4",type: "simple", capacity: 2}])
+// db.rooms.insert([{label: "Chambre1",type: "simple", capacity: 4}, 
+//                     {label: "Chambre2",type: "simple", capacity: 4}, 
+//                     {label: "Chambre3",type: "simple", capacity: 2},
+//                     {label: "Chambre4",type: "simple", capacity: 4}, 
+//                     {label: "Chambre5",type: "simple", capacity: 2},
+//                     {label: "Chambre6",type: "simple", capacity: 4}, 
+//                     {label: "Chambre7",type: "simple", capacity: 2},
+//                     {label: "Suite1",type: "suite", capacity: 4}, 
+//                     {label: "Suite2",type: "suite", capacity: 2}, 
+//                     {label: "Suite3",type: "suite", capacity: 2}
+//                     ])
