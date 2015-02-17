@@ -5,9 +5,9 @@
 var aristideServices = angular.module('aristideServices', ['ngResource']);
 
 
-aristideServices.factory('Customer', ['$resource', 'Utilities',
-  function($resource, Utilities){
-    return $resource('http://localhost:8090/customer/:queryType/:param', {}, {
+aristideServices.factory('Customer', ['$resource', 'Utilities', 'CONFIG',
+  function($resource, Utilities, Config){
+    return $resource(Config.host+'/customer/:queryType/:param', {}, {
       query: {method:'GET', params:{queryType: 'regular', param: null}, isArray:true},
       get: {params:{queryType: 'regular'}, transformResponse: Utilities.castResponseObjectModel},
       save: {method:'POST', params:{queryType: 'regular', param: null}, transformResponse: Utilities.castResponseObjectModel},
@@ -20,7 +20,7 @@ aristideServices.factory('Customer', ['$resource', 'Utilities',
 
 aristideServices.factory('Booking', ['$resource', 'Utilities',
   function($resource, Utilities){
-    return $resource('http://localhost:8090/booking/:queryType/:param/:param1/:param2', {}, {
+    return $resource(Config.host+'/booking/:queryType/:param/:param1/:param2', {}, {
       getRooms: {method:'GET', params:{queryType: 'room', param: null}, isArray:true},
       getStayTypes: {method:'GET', params:{queryType: 'stayType', param: null}, isArray:true},
       getPassTypes: {method:'GET', params:{queryType: 'passType', param: null}, isArray:true},
