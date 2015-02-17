@@ -1,0 +1,19 @@
+Statut des passes:
+
+- Dates de fin de validité dépassées => Invalide
+
+- Jours consommés et aucune résa en cours ou dans le futur => Invalide
+
+- Jours consommés mais au moins une résa en cours ou futur => Valide warning
+
+- Jours pas tous consommés => Valide
+
+
+
+Prévoie la possibilité de créer un pass sans résa
+
+Prendre en compte le statut annulé dasn le calcul des jours restants et dasn le plan d'occupation
+
+Validation formulaire: empêcher si pas assez de jours
+
+Trouver un moyen de requêter les subdocuments correspondant aux filtres de recherches

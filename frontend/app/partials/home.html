@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="jumbotron">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3>Vérifier les disponibilités</h3></div>
+        <div class="panel-body">
+          <form role="form" novalidate class="css-form" name="myForm">
+            <div class="form-inline">          
+              <div class="form-group" ng-class="{'has-danger': myForm.bookingConsumptionCheckIn.$error.required, 'has-danger': !myForm.bookingConsumptionCheckIn.$valid}">
+                <label class="sr-only" for="checkIn">checkIn</label>            
+                <input type="datetime-local" class="form-control input-lg" min="{{dfltCheckin}}" name="bookingConsumptionCheckIn" ng-model="booking.consumption.checkin" required ng-change="setDateConsistency()"/>
+              </div>
+              <div class="form-group" ng-class="{'has-warning': myForm.bookingConsumptionCheckOut.$error.required, 'has-danger': !myForm.bookingConsumptionCheckOut.$valid}">
+                <label class="sr-only" for="checkOut">checkOut</label>            
+                <input type="datetime-local" class="form-control input-lg" name="bookingConsumptionCheckOut" ng-model="booking.consumption.checkout" required  min="{{dfltCheckout}}"/>
+                <button type="button" class="btn btn-lg btn-primary" ng-click="checkAvailability(booking.consumption.checkin, booking.consumption.checkout)" ng-disabled="(myForm.bookingConsumptionCheckOut.$error.required || myForm.bookingConsumptionCheckIn.$error.required)" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                  </button>
+              </div>
+          </div>
+      </form>
+      </div> 
+    </div>      
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3>Checkin du Jour</h3></div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="checkin in checkinOfTheDay">
+              <div class="list-group">
+                <a href="#/customer/{{checkin.customer_id}}" class="list-group-item" ng-repeat="consumption in checkin.consumptions">
+                  Heure: <strong>{{consumption.checkin | date: 'HH:mm'}}</strong> Chats: <span ng-repeat="cat in consumption.cats"><strong>{{cat.name}}</strong> // </span> - Chambre: <strong>{{consumption.room.label}}</strong> -  Commentaires: <strong>{{consumption.comments}}</strong>
+                </a>                
+              </div>
+            </li>      
+          </ul>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3>Checkout du Jour</h3></div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="checkout in checkoutOfTheDay">
+              <div class="list-group">
+                <a href="#/customer/{{checkout.customer_id}}" class="list-group-item" ng-repeat="consumption in checkout.consumptions">
+                  Heure: <strong>{{consumption.checkout | date: 'HH:mm'}}</strong> Chats: <span ng-repeat="cat in consumption.cats"><strong>{{cat.name}}</strong> // </span> - Chambre: <strong>{{consumption.room.label}}</strong> -  Commentaires: <strong>{{consumption.comments}}</strong>
+                </a>                
+              </div>
+            </li>      
+          </ul>
+        </div>
+      </div>      
+    <div ng-include="'partials/datas-grid.html'"></div> 
+</div>
