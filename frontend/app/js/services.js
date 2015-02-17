@@ -18,8 +18,8 @@ aristideServices.factory('Customer', ['$resource', 'Utilities', 'CONFIG',
   }]);
 
 
-aristideServices.factory('Booking', ['$resource', 'Utilities',
-  function($resource, Utilities){
+aristideServices.factory('Booking', ['$resource', 'Utilities', 'CONFIG',
+  function($resource, Utilities, Config){
     return $resource(Config.host+'/booking/:queryType/:param/:param1/:param2', {}, {
       getRooms: {method:'GET', params:{queryType: 'room', param: null}, isArray:true},
       getStayTypes: {method:'GET', params:{queryType: 'stayType', param: null}, isArray:true},
