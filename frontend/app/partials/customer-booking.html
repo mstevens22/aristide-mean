@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <form role="form" novalidate class="css-form" name="myForm">
+    <div class="panel panel-default">
+      <div class="alert alert-success sample-show-hide" ng-show="successMessage">
+            <button type="button" class="close" ng-click="successMessage=null">&times;</button>
+            <strong>Success!</strong> {{successMessage}}
+          </div>
+      <div class="panel-heading">
+        <h3 class="panel-title">Ajouter un pass pour {{customer.firstName }} {{customer.lastName }}</h3>
+      </div>
+      <div class="panel-body">
+        <!-- Wether there is no active booking-->
+        <div class="form-inline">          
+          <div class="form-group" ng-class="{'has-warning': myForm.bookingStayType.$error.required}">
+            <label class="sr-only" for="Stay">Stay</label>          
+            <select class="form-control input-sm" ng-model="booking.stayType" name="bookingStayType" ng-options="stayType.label for stayType in stayTypes" required></select>
+          </div>
+          <div class="form-group" ng-class="{'has-warning': myForm.duration.$error.required}">
+            <label class="sr-only" for="Pass">Pass</label>          
+            <select class="form-control input-sm" ng-model="booking.passType" ng-options="passType.label for passType in passTypes" ng-change="(booking.duration=booking.passType.duration)"></select>
+            <input type="text" class="form-control input-sm" placeholder="Durée" ng-model="booking.duration" name="duration" required ng-show="booking.passType.label=='Sur mesure'"/>
+          </div>
+          <div class="form-group" ng-class="{'has-warning': myForm.bookingConsumptionCats.$error.required}">
+            <label class="sr-only" for="Pass">Cats</label> 
+            <select class="form-control input-sm" ng-model="booking.consumption.cats" name="bookingConsumptionCats" multiple ng-multiple="true" size="1" required ng-options="cat.name for cat in customer.cats track by cat.name"/>          
+          </div>
+          <div class="form-group" ng-class="{'has-warning': myForm.bookingConsumptionCheckIn.$error.required, 'has-danger': !myForm.bookingConsumptionCheckIn.$valid}">
+            <label class="sr-only" for="checkIn">checkIn</label>            
+            <input type="datetime-local" class="form-control input-sm" min="{{dfltCheckin}}" name="bookingConsumptionCheckIn" ng-model="booking.consumption.checkin" required ng-change="setDateConsistency()"/>
+          </div>
+          <div class="form-group" ng-class="{'has-warning': myForm.bookingConsumptionCheckOut.$error.required, 'has-danger': !myForm.bookingConsumptionCheckOut.$valid}">
+            <label class="sr-only" for="checkOut">checkOut</label>            
+            <input type="datetime-local" class="form-control input-sm" name="bookingConsumptionCheckOut" ng-model="booking.consumption.checkout" required  min="{{dfltCheckout}}"/>
+            <button type="button" class="btn btn-xs btn-primary" ng-click="checkAvailability(booking.consumption.checkin, booking.consumption.checkout)" ng-disabled="(myForm.bookingConsumptionCheckOut.$error.required || myForm.bookingConsumptionCheckIn.$error.required)" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-refresh"></span>
+              </button>
+          </div>
+          <div class="form-group" ng-class="{'has-warning': myForm.bookingConsumptionRoom.$error.required}">
+            <label class="sr-only" for="Rooms">Room</label>          
+            <select class="form-control input-sm" ng-model="booking.consumption.room" name="bookingConsumptionRoom" ng-options="room.label for room in rooms" required></select>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="Status">Status</label>            
+            <select class="form-control input-sm" ng-model="booking.consumption.state" ng-options="state for state in states"></select>
+          </div>          
+          <div class="form-group">
+            <label class="sr-only" for="Comments">Comments</label>
+            <textarea class="form-control" rows="1" ng-model="booking.consumption.comments" placeholder="Commentaires" />
+          </div>
+          <div class="form-group">                        
+            <input type="submit" class="btn btn-warning" ng-click="save()" value="Réserver" ng-disabled="!myForm.$valid"/>
+          </div>
+        </div>                          
+      </div>
+    </div>
+    </form>
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Pass de {{customer.firstName }} {{customer.lastName}}</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="booking in bookings | orderBy:booking.startDate:reverse" ng-class="{'list-group-item-danger': isNaN(booking.daysLeft), 'list-group-item-warning': booking.daysLeft <= 0, 'list-group-item-success': booking.daysLeft > 0}">                        
+            <ul class="list-group">
+              <li class="list-group-item" >Séjour: <strong>{{booking.stay}} {{booking.pass}}</strong> valable du {{booking.startDate | date: "d MMMM y"}} au {{booking.endDate | date: 'd MMMM y'}} <button type="button" class="btn btn-xs btn-primary" ng-click="booking.consumptions.unshift({})"><span class="glyphicon glyphicon-calendar"></span>
+                  </button><span class="badge">{{booking.daysLeft}}</span>
+              </li>
+              <li class="list-group-item" ng-repeat="consumption in booking.consumptions" ng-hide="isNaN(booking.daysLeft)">
+                <ng-form name="consumptionForm" class="form-inline">
+                <div class="form-group" ng-class="{'has-warning': consumptionForm.consumptionCheckIn.$error.required}">
+                  <label class="sr-only" for="checkIn">checkIn</label>          
+                  <input type="datetime-local" class="form-control input-sm" name="consumptionCheckIn" ng-model="consumption.checkin" required/>
+                </div>
+                <div class="form-group" ng-class="{'has-warning': consumptionForm.consumptionCheckIn.$error.required}">
+                  <label class="sr-only" for="checkIn">checkOut</label>            
+                  <input type="datetime-local" class="form-control input-sm" name="consumptionCheckIn" ng-model="consumption.checkout" required/>
+                  <button type="button" class="btn btn-xs btn-primary" ng-click="checkAvailability(consumption.checkin, consumption.checkout)" ng-disabled="(consumptionForm.consumptionCheckIn.$error.required || consumptionForm.consumptionCheckOut.$error.required)" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-refresh"></span>
+              </button>
+                </div>
+                <div class="form-group" ng-class="{'has-warning': consumptionForm.consumptionCats.$error.required}">
+                  <label class="sr-only" for="Pass">Pass</label> 
+                  <select class="form-control input-sm" ng-model="consumption.cats" name="consumptionCats" multiple ng-multiple="true" size="1" ng-options="cat.name for cat in customer.cats track by cat.name" required/>
+                </div>
+                <div class="form-group" ng-class="{'has-warning': consumptionForm.consumptionRoom.$error.required}">
+                  <label class="sr-only" for="Rooms">Room</label>          
+                  <select class="form-control input-sm" ng-model="consumption.room" name="consumptionRoom" ng-options="room.label for room in rooms track by room.label" required></select>
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" for="Status">Status</label>            
+                  <select class="form-control input-sm" ng-model="consumption.state" ng-options="state for state in states"></select>
+                </div>          
+                <div class="form-group">
+                  <label class="sr-only" for="Comments">Comments</label>
+                  <textarea class="form-control" rows="1" ng-model="consumption.comments" placeholder="Commentaires" />
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-xs btn-primary" ng-disabled="!consumptionForm.$valid" ng-hide="consumptionIsOver(consumption)" ng-click="saveConsumption($parent.$index, $index)">
+                    <span class="glyphicon glyphicon-save"></span>
+                  </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-xs btn-danger" ng-click="removeConsumption($parent.$index, $index)" ng-hide="consumptionIsOver(consumption)">
+                    <span class=" glyphicon glyphicon-remove"></span>
+                  </button>
+                </div>
+                <div class="form-group">
+                <h6 class="glyphicon glyphicon-ok sample-show-hide" aria-hidden="true" ng-show="successMessageForConsumption" role="alert">
+                  {{successMessageForConsumption}}</h6>
+                  </div>       
+                </ng-form>
+                </li>
+              </li>
+            </ul>          
+          </li>
+        </ul>        
+      </div>
+    </div>
+<div ng-include="'partials/datas-grid.html'"></div> 
+</div> <!-- /container 

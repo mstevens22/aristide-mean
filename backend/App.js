@@ -13,7 +13,6 @@ var mongoose        = require("mongoose");
 var app            	= express();
 var fs              = require('fs');
 
-
 app.use('/static', express.static(__dirname + '/uploads'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());

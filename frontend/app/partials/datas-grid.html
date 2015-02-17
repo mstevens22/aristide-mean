@@ -1,0 +1,29 @@
+<!-- /modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="DataGridCtrl">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Plan d'Occupation</h4>
+      </div>
+      <div class="modal-body">
+        <div style="overflow: auto">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Chambre</th>
+              <th ng-repeat="data in dataRange">{{data}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="room in rooms" class="sample-show-hide">
+              <td>{{ room.label }}</td>
+              <td ng-repeat="data in dataRange"  ng-class="setClassToGrid(data, room)"><span ng-bind="setDataToGrid(data, room)"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /modal -->
