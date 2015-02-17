@@ -20,18 +20,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer({ dest: './uploads/'}));
 app.use(methodOverride());
 
-app.listen(8090);
-console.log('Im listening on port 8090');
 
-
-// MongoDB configuration
-mongoose.connect('mongodb://localhost/aristide', function(err, res) {
-  if(err) {
-    console.log('error connecting to MongoDB Database. ' + err);
-  } else {
-    console.log('Connected to Database');
-  }
+app.configure('prod', function(){
+  app.listen(8080);
+  // MongoDB configuration
+  mongoose.connect('mongodb://10.240.237.154/aristide', function(err, res) {
+    if(err) {
+      console.log('error connecting to MongoDB Database. ' + err);
+    } else {
+      console.log('Connected to Database');
+    }
+  });
 });
+app.configure('dev', function(){
+  app.listen(8090);
+  // MongoDB configuration
+  mongoose.connect('mongodb://localhost/aristide', function(err, res) {
+    if(err) {
+      console.log('error connecting to MongoDB Database. ' + err);
+    } else {
+      console.log('Connected to Database');
+    }
+  });
+});
+
+console.log('Im listening on port 8080');
 
 //Deal with CORS issues
 app.use(function(req, res, next) {
@@ -43,7 +56,7 @@ app.use(function(req, res, next) {
 
 // First example router
 app.get('/', function(req, res) {
-  res.send("Hello world!");
+  res.send("Hello Aristide Backend!");
 });
 
 app.post('/upload', function (req, res) {
