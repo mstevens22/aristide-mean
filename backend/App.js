@@ -13,6 +13,7 @@ var mongoose        = require("mongoose");
 var app            	= express();
 var fs              = require('fs');
 
+console.log(__dirname);
 
 app.use('/static', express.static(__dirname + '/uploads'));
 app.use(morgan('dev'));
@@ -80,8 +81,8 @@ app.post('/upload', function (req, res) {
 });
 
 //Add the routes
-var routesCustomer = require('./routes/customer')(app);
-var routesBooking = require('./routes/booking')(app);
-var routesPassType = require('./routes/passType')(app);
-var routesStayType = require('./routes/stayType')(app);
-var routesRoom = require('./routes/room')(app);
+var routesCustomer = require(__dirname+'/routes/customer')(app);
+var routesBooking = require(__dirname+'/routes/booking')(app);
+var routesPassType = require(__dirname+'/routes/passType')(app);
+var routesStayType = require(__dirname+'/routes/stayType')(app);
+var routesRoom = require(__dirname+'/routes/room')(app);
