@@ -304,7 +304,7 @@ aristideControllers.controller('CustomerDetailCtrl', ['$scope', '$routeParams','
         $scope.customer.cats[$scope.uploadIndex].illustration = data[1].innerHTML;
         $('#myModal').modal('toggle');
       };
-      $scope.uploadStart = function() {        
+      $scope.uploadStart = function() {                      
         document.domain = 'localhost'; //dirty hack
       };
 
@@ -313,5 +313,7 @@ aristideControllers.controller('CustomerDetailCtrl', ['$scope', '$routeParams','
       };
 
       $scope.sexes = ['male', 'female'];
-      $scope.uploadHost = Config.host;
+      //$scope.uploadHost = Config.host;
+      $('#uploadForm').attr("action", Config.host + '/upload');  
+      console.log($scope.uploadHost);
   }]);

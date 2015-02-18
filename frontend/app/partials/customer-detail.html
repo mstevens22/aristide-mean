@@ -91,7 +91,7 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-body">
-          <form name="uploadForm" ng-upload="uploadFile(content, completed)" ng-upload-loading="uploadStart()" action="{{uploadHost}}/upload" class="ng-pristine ng-valid form-inline" method="post" enctype="multipart/form-data">
+          <form name="uploadForm" id="uploadForm" ng-upload="uploadFile(content, completed)" ng-upload-loading="uploadStart()" class="ng-pristine ng-valid form-inline" method="post" enctype="multipart/form-data" action="">
             <span class="btn btn-warning btn-file">
                 Browse <input type="file" name="file">
             </span>             
