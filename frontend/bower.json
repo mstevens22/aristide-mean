@@ -13,7 +13,7 @@
     "angular-route": "1.3.x",
     "angular-resource": "1.3.x",
     "angular-animate": "1.3.x",
-    "ngUpload": "latest",
-    "angular-moment": "latest" 
+    "ngUpload": "0.5.14",
+    "angular-moment": "0.9.0"
   }
 }
