@@ -2,7 +2,7 @@
 
 /* Controllers */
 /* Todo 
-  - Must try to find a way to avoid using the dirty hack of 'document.domain' in order to let the frames talk
+  - Redo the login via FB not on purpose
 */
 
 var aristideControllers = angular.module('aristideControllers', []);
@@ -320,13 +320,11 @@ aristideControllers.controller('CustomerDetailCtrl', ['$scope', '$routeParams','
 
 aristideControllers.controller('AuthenticationCtrl', ['$scope', '$interval', 'Facebook', 
     function($scope, $interval, Facebook) {
-
       //First thing to do
-      $scope.getLoginStatus = function() {
-        console.log('here!'+angular.isDefined($scope.isLogged))
+      $scope.getLoginStatus = function() {        
         Facebook.getLoginStatus(function(response) {              
-          if(response.status === 'connected') {
-            $scope.isLogged = true;
+          if(response.status === 'connected') {            
+            $scope.isLogged = true;            
           } else {
             $scope.isLogged = false;
           }
@@ -338,14 +336,14 @@ aristideControllers.controller('AuthenticationCtrl', ['$scope', '$interval', 'Fa
         // From now on you can use the Facebook service just as Facebook api says
         Facebook.login(function(response) {
           if(response.status === 'connected') { 
-            $scope.me();       
-            if (response.authResponse.userID == '10153054271566505') {
-              //'790221504'
-              //'582287782'
-              $scope.isLogged = true;
-            }  else {              
-              $scope.logout();
-            }            
+            Facebook.api('/me', function(response) {          
+              if (response.name == 'Mathias Stevens' || response.name == 'Gauthier Berdeaux') {
+                //console.log(response.name);
+                $scope.isLogged = true;
+              }  else {              
+                $scope.logout();
+              } 
+            });                      
           } else {
             $scope.isLogged = false;
           }
@@ -358,10 +356,9 @@ aristideControllers.controller('AuthenticationCtrl', ['$scope', '$interval', 'Fa
         });
       }      
 
-      $scope.me = function() {
-        Facebook.api('/me', function(response) {       
-          console.log(response);
-          $scope.admin = response
-        });
+      // $scope.me = function() {
+      //   Facebook.api('/me', function(response) {          
+      //     $scope.admin = response;
+      //   });
       };      
 }]);
