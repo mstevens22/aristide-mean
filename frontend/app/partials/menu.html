@@ -1,0 +1,26 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#/">≧^◡^≦ Aristide ≧^◡^≦</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">                    
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">Clients <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/customer">Liste</a></li>
+                <li><a href="#/customer/add">Ajouter</a></li>
+              </ul>
+            </li>
+            <li class="dropdown" ng-show="isLogged">
+              <a class="dropdown-toggle" data-toggle="dropdown" ng-click="logout()"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            </li>                       
+          </ul>          
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
