@@ -25,41 +25,21 @@
   <script src="bower_components/moment/moment.js"></script>
   <script src="bower_components/angular-moment/angular-moment.js"></script>
   <script src="bower_components/jsPDF/dist/jspdf.min.js"></script>
+  <script src="bower_components/angular-facebook/lib/angular-facebook.js"></script>
 
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/services.js"></script>
 </head>
-<body>
+<body ng-controller="AuthenticationCtrl">
+  <div ng-include="'partials/menu.html'"></div>
 
-  <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#/">≧^◡^≦ Aristide ≧^◡^≦</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">                    
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown">Clients <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#/customer">Liste</a></li>
-                <li><a href="#/customer/add">Ajouter</a></li>
-              </ul>
-            </li>                         
-          </ul>           
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-
-  <div class="view-container">
-    <div ng-view class="view-frame"></div>
+  <div class="view-container" ng-show="isLogged">
+    <div ng-view class="view-frame"></div>  
   </div>
+
+  <div class="view-container"  ng-include="'partials/login.html'" ng-show="!isLogged" ></div>
 
 </body>
 </html>

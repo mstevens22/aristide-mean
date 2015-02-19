@@ -9,12 +9,24 @@ var aristideApp = angular.module('aristideApp', [
   'aristideControllers',
   'aristideFilters',
   'aristideServices',
-  'angularMoment'
+  'angularMoment',
+  'facebook'
 ]);
 
+aristideApp.config([
+    'FacebookProvider',
+    function(FacebookProvider) {
+     var myAppId = '1598114213740073';
+     FacebookProvider.init(myAppId);
+     
+    }
+  ])
+
 aristideApp.constant('CONFIG', {
-  //host: 'http://localhost:8090'
-  host: 'http://104.154.69.14:8080'
+  // host: 'http://localhost:8090',
+  // domain: 'localhost'
+  host: 'http://office.aristide-hotel.com:8080',
+  domain: 'aristide-hotel.com'  
 });
 
 

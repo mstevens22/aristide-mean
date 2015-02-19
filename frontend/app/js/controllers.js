@@ -305,7 +305,7 @@ aristideControllers.controller('CustomerDetailCtrl', ['$scope', '$routeParams','
         $('#myModal').modal('toggle');
       };
       $scope.uploadStart = function() {                      
-        document.domain = 'localhost'; //dirty hack
+        document.domain = Config.domain; //dirty hack
       };
 
       $scope.setActiveIndex = function(index) {    
@@ -315,5 +315,53 @@ aristideControllers.controller('CustomerDetailCtrl', ['$scope', '$routeParams','
       $scope.sexes = ['male', 'female'];
       //$scope.uploadHost = Config.host;
       $('#uploadForm').attr("action", Config.host + '/upload');  
-      console.log($scope.uploadHost);
+      //console.log($scope.uploadHost);
   }]);
+
+aristideControllers.controller('AuthenticationCtrl', ['$scope', '$interval', 'Facebook', 
+    function($scope, $interval, Facebook) {
+
+      //First thing to do
+      $scope.getLoginStatus = function() {
+        console.log('here!'+angular.isDefined($scope.isLogged))
+        Facebook.getLoginStatus(function(response) {              
+          if(response.status === 'connected') {
+            $scope.isLogged = true;
+          } else {
+            $scope.isLogged = false;
+          }
+        });
+      };
+      $scope.getLoginStatus();
+
+      $scope.login = function() {
+        // From now on you can use the Facebook service just as Facebook api says
+        Facebook.login(function(response) {
+          if(response.status === 'connected') { 
+            $scope.me();       
+            if (response.authResponse.userID == '10153054271566505') {
+              //'790221504'
+              //'582287782'
+              $scope.isLogged = true;
+            }  else {              
+              $scope.logout();
+            }            
+          } else {
+            $scope.isLogged = false;
+          }
+        });
+      };
+
+      $scope.logout = function() {
+        Facebook.logout(function(response) {               
+            $scope.isLogged = false;
+        });
+      }      
+
+      $scope.me = function() {
+        Facebook.api('/me', function(response) {       
+          console.log(response);
+          $scope.admin = response
+        });
+      };      
+}]);

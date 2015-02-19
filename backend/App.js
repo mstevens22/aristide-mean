@@ -34,7 +34,7 @@ if (app.get('env') == 'production') {
       console.log('Connected to Database on port 80');
     }
   });  
-  app.set('iframeDomain', '104.154.53.229');
+  app.set('iframeDomain', 'aristide-hotel.com');
 } else {
   app.listen(8090);
   console.log('Liste on port 8090');
