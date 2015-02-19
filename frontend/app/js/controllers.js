@@ -360,5 +360,5 @@ aristideControllers.controller('AuthenticationCtrl', ['$scope', '$interval', 'Fa
       //   Facebook.api('/me', function(response) {          
       //     $scope.admin = response;
       //   });
-      };      
+      //};      
 }]);
