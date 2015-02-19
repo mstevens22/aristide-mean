@@ -25,7 +25,7 @@ aristideApp.config([
 aristideApp.constant('CONFIG', {
   // host: 'http://localhost:8090',
   // domain: 'localhost'
-  host: 'http://office.aristide-hotel.com:8080',
+  host: 'http://api.aristide-hotel.com:8080',
   domain: 'aristide-hotel.com'  
 });
 
