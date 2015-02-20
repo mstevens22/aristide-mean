@@ -315,6 +315,7 @@ aristideControllers.controller('CustomerDetailCtrl', ['$scope', '$routeParams','
       $scope.sexes = ['male', 'female'];
       //$scope.uploadHost = Config.host;
       $('#uploadForm').attr("action", Config.host + '/upload');  
+      $scope.staticPath = Config.host;
       //console.log($scope.uploadHost);
   }]);
 

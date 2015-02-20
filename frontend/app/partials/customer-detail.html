@@ -75,7 +75,7 @@
               <div class="form-group" >              
               <label class="sr-only" for="Illustration">Illustration</label>
               <input type="hidden"  ng-model="cat.illustration">
-              <img ng-src="http://localhost:8090/static/{{cat.illustration}}" class="img-circle" width="50px" height="50px" ng-click="setActiveIndex($index)" data-toggle="modal" data-target="#myModal" ng-if="cat.illustration != null">
+              <img ng-src="{{staticPath}}/static/{{cat.illustration}}" class="img-circle" width="50px" height="50px" ng-click="setActiveIndex($index)" data-toggle="modal" data-target="#myModal" ng-if="cat.illustration != null">
               <button class="btn btn-primary" ng-click="setActiveIndex($index)" data-toggle="modal" data-target="#myModal" ng-if="cat.illustration == null">Photo</button>
               <button class="btn btn-danger" type="button" ng-click="customer.cats.splice($index)">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
